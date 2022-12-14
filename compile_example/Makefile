@@ -6,7 +6,7 @@ LIB= -L/data/hqchen/software/clibs/lib -lm -lgsl -lgslcblas
 INCLUDE=-I/data/hqchen/software/clibs/include
 
 
-CODEDIR=/Users/hqchen/software/RT1D_PZ/src/
+CODEDIR=/data/hqchen/software/RT1D_PZ/src/
 
 srcs=propagate.c qss.c calc_rates.c integrate.c cosmology.c atomic_data.c spec.c base.c
 srcpaths=$(patsubst %.c, $(CODEDIR)/%.c, $(srcs))
