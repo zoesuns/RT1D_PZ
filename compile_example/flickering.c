@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
     specBlockIn->current=nepoch;
     for (int i=0; i<specBlockIn->current; i++){
         specBlockIn->t[i]=i*1e6*yr2s;
-        new_powerlaw_spec(specBlockIn->y[i], 1e57*(1%2), 1.5);
+        new_powerlaw_spec(specBlockIn->y[i], 1e57*int(i%2), 1.5);
     }
 
 

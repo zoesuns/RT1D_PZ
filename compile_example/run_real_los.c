@@ -33,8 +33,8 @@ int main(int argc, char *argv[]){
     char *eptr;
     double zuni=strtod(argv[2],&eptr);
     printf("%f\n", zuni);
-    int no=8;
-    double tOutList[]={ 1e5*yr2s, 3e5*yr2s, 1e6*yr2s, 3e6*yr2s, 1e7*yr2s, 3e7*yr2s, 6e7*yr2s, 1e8*yr2s};
+    int no=6;
+    double tOutList[]={ 1e5*yr2s, 3e5*yr2s, 1e6*yr2s, 3e6*yr2s, 1e7*yr2s, 3e7*yr2s};
     double *spec;
     spec=init_spec();
     new_powerlaw_spec(spec, 1e57, 1.5);
