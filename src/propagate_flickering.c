@@ -25,7 +25,7 @@ outArrayBlock* remove_similar_spec(outArrayBlock *specBlockIn, int trimSpec){
     if (trimSpec==0){
         for (int i=1; i<specBlockIn->current; i++){
             int inewPrev=specBlockInShrink->current-1;
-            if ((specBlockIn->t[i]/specBlockInShrink->t[inewPrev])<1.00001){   // set time resolution
+            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<1.*yr2s){ // set time resolution
                 //printf("specBlockIn->t[%d]=%6.4e, specBlockInShrink->t[%d]=%6.4e\n", i, specBlockIn->t[i]/yr2s, inewPrev,specBlockInShrink->t[specBlockInShrink->current-1]/yr2s);
             } else{
                 specBlockInShrink->t[specBlockInShrink->current]=specBlockIn->t[i];
@@ -37,17 +37,19 @@ outArrayBlock* remove_similar_spec(outArrayBlock *specBlockIn, int trimSpec){
         }
     }
     else if (trimSpec==1){
+        double tooDimHI=1e40;
+        double tooDimHeII=1e40;
         for (int i=1; i<specBlockIn->current; i++){
             int inewPrev=specBlockInShrink->current-1;
-            if ((specBlockIn->t[i]/specBlockInShrink->t[inewPrev])<1.00001){   // set time resolution
+            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<1.*yr2s){ // set time resolution
             } else{
-                if ((fabs((specBlockIn->y[i][0]+1.)/(specBlockInShrink->y[inewPrev][0]+1.)-1)<1e-5) &&    //13.97eV
-                        (fabs((specBlockIn->y[i][4]+1.)/(specBlockInShrink->y[inewPrev][4]+1.)-1)<1e-5) &&     //17.32eV
-                            (fabs((specBlockIn->y[i][11]+1.)/(specBlockInShrink->y[inewPrev][11]+1.)-1)<1e-5) &&      //25.23eV
-                                (fabs((specBlockIn->y[i][15]+1.)/(specBlockInShrink->y[inewPrev][15]+1.)-1)<1e-5) &&   //31.27eV
-                                    (fabs((specBlockIn->y[i][26]+1.)/(specBlockInShrink->y[inewPrev][26]+1.)-1)<1e-5) &&      //56.47eV
-                                        (fabs((specBlockIn->y[i][35]+1.)/(specBlockInShrink->y[inewPrev][35]+1.)-1)<1e-5) &&    //91.57586  eV
-                                            (fabs((specBlockIn->y[i][50]+1.)/(specBlockInShrink->y[inewPrev][50]+1.)-1)<1e-5)){    //204.9946 eV
+                if ((fabs((specBlockIn->y[i][0]+tooDimHI)/(specBlockInShrink->y[inewPrev][0]+tooDimHI)-1)<1e-3) &&    //13.97eV
+                        (fabs((specBlockIn->y[i][4]+tooDimHI)/(specBlockInShrink->y[inewPrev][4]+tooDimHI)-1)<1e-2) &&     //17.32eV
+                            (fabs((specBlockIn->y[i][11]+tooDimHI)/(specBlockInShrink->y[inewPrev][11]+tooDimHI)-1)<1e-1) &&      //25.23eV
+                                (fabs((specBlockIn->y[i][15]+tooDimHI)/(specBlockInShrink->y[inewPrev][15]+tooDimHI)-1)<1e-1) &&   //31.27eV
+                                    (fabs((specBlockIn->y[i][26]+tooDimHeII)/(specBlockInShrink->y[inewPrev][26]+tooDimHeII)-1)<1e-3) &&      //56.47eV
+                                        (fabs((specBlockIn->y[i][35]+tooDimHeII)/(specBlockInShrink->y[inewPrev][35]+tooDimHeII)-1)<1e-2) &&    //91.57586  eV
+                                            (fabs((specBlockIn->y[i][50]+tooDimHeII)/(specBlockInShrink->y[inewPrev][50]+tooDimHeII)-1)<1e-1)){    //204.9946 eV
                 } else {
                     specBlockInShrink->t[specBlockInShrink->current]=specBlockIn->t[i];
                     for (int j=0; j<NUM_ENERGY_BINS; j++){
