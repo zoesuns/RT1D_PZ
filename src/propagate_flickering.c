@@ -25,7 +25,7 @@ outArrayBlock* remove_similar_spec(outArrayBlock *specBlockIn, int trimSpec){
     if (trimSpec==0){
         for (int i=1; i<specBlockIn->current; i++){
             int inewPrev=specBlockInShrink->current-1;
-            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<1.*yr2s){ // set time resolution
+            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<0.001*yr2s){ // set time resolution
                 //printf("specBlockIn->t[%d]=%6.4e, specBlockInShrink->t[%d]=%6.4e\n", i, specBlockIn->t[i]/yr2s, inewPrev,specBlockInShrink->t[specBlockInShrink->current-1]/yr2s);
             } else{
                 specBlockInShrink->t[specBlockInShrink->current]=specBlockIn->t[i];
@@ -41,7 +41,7 @@ outArrayBlock* remove_similar_spec(outArrayBlock *specBlockIn, int trimSpec){
         double tooDimHeII=1e40;
         for (int i=1; i<specBlockIn->current; i++){
             int inewPrev=specBlockInShrink->current-1;
-            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<1.*yr2s){ // set time resolution
+            if ((specBlockIn->t[i]-specBlockInShrink->t[inewPrev])<0.001*yr2s){ // set time resolution
             } else{
                 if ((fabs((specBlockIn->y[i][0]+tooDimHI)/(specBlockInShrink->y[inewPrev][0]+tooDimHI)-1)<1e-3) &&    //13.97eV
                         (fabs((specBlockIn->y[i][4]+tooDimHI)/(specBlockInShrink->y[inewPrev][4]+tooDimHI)-1)<1e-2) &&     //17.32eV
