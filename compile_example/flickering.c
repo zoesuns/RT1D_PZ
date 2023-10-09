@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_spline.h>
-
+#include "qss.h"
 #include "base.h"
 #include "cosmology.h"
 #include "atomic_data.h"
 #include "spec.h"
 #include "calc_rates.h"
-#include "propagate.h"
+#include "propagate_flickering.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -35,9 +35,17 @@ int main(int argc, char *argv[]){
     printf("%f\n", zuni);
     int no=6;
     double tOutList[]={ 1e5*yr2s, 3e5*yr2s, 1e6*yr2s, 3e6*yr2s, 1e7*yr2s, 3e7*yr2s};
-    double *spec;
-    spec=init_spec();
-    new_powerlaw_spec(spec, 1e57, 1.5);
+
+    outArrayBlock *specBlockIn;
+    int nepoch=10;
+    specBlockIn=output_alloc(NUM_ENERGY_BINS, nepoch); 
+    specBlockIn->current=nepoch;
+    for (int i=0; i<specBlockIn->current; i++){
+        specBlockIn->t[i]=i*1e6*yr2s;
+        new_powerlaw_spec(specBlockIn->y[i], 1e57*int(i%2), 1.5);
+    }
+
+
 
 
     int tmp, nc;
@@ -65,7 +73,7 @@ int main(int argc, char *argv[]){
         //H_only_cell(&cell[k], dist, 0.01); 
     }
 
-    propagate_los(nc, cell, spec, zuni, no, tOutList, bkg, argv[1], "test", 1, 100); // 0 means do not trim similar spectra, 100 means output cell and incidental spec every 100 cells
+    propagate_lc_los(nc, cell, specBlockIn, zuni, no, tOutList, bkg, argv[1], "test", 1, 100); // 0 means do not trim similar spectra, 100 means output cell and incidental spec every 100 cells
 
 
     free_loaded_recomb_data();

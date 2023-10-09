@@ -51,7 +51,8 @@ void rate_func(double t, double *y, void *params, double *w, double *a){
 
     double Gamma_qso[3], phHeating_qso[3], Cooling;
     double cosmicTime0=cosmo_age_z(((rateParams *) params)->zuni);
-    double zuni_now=cosmo_z_age(cosmicTime0+t/(1e8*yr2s));
+    double zuni_now=cosmo_z_age(cosmicTime0+t/(1e6*yr2s));
+    //printf("cosmicTime0=%f,zuni_now=%f\n",cosmicTime0,zuni_now);
     //print_cell_properties(&newCell);
     Cooling=calc_Cooling(&newCell, zuni_now);
     //printf("check point 0\n");

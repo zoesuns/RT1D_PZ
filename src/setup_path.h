@@ -2,6 +2,6 @@
 #define _INCL_SETUP_PATH_
 
 //char dataDir[200];
-#define dataDir "/Users/hqchen/reionization/pyfrit/pyfrit/RT1D/data/"
+#define dataDir "/data/hqchen/software/RT1D_PZ/data/"
 
 #endif
